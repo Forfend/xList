@@ -1,5 +1,7 @@
 package com.xList.Servlets;
 
+import com.xList.Model.Note;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,19 +11,22 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "Note",value = {"/note/*"})
-public class Note extends HttpServlet {
+@WebServlet(name = "NoteServlet",value = {"/note/*"})
+public class NoteServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         out.println(PageParts.getTag("h3","Додано!","class=\"text-info\""));
         String memo = new String(request.getParameter("textInputMemo").getBytes("iso-8859-1"),
                 "UTF-8");
-        String[]list=memo.split("\\n");
-        for (String line:list){
+        String[]memoList=memo.split("\\n");
+        for (String line:memoList){
             out.println(PageParts.getTag("h4","Ви додали:\t"+line,""));
         }
         HttpSession session=request.getSession();
-        session.setAttribute("memo", list);
+
+        Note note = new Note(memoList);
+        session.setAttribute("memo", memoList);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

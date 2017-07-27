@@ -22,7 +22,7 @@ public class Start extends HttpServlet {
         User user = new User(emailLogin, loginPassword);
         HttpSession session = request.getSession();
         if(user.checkLogin()) {
-            session.setAttribute("username", user.getEmail());
+            session.setAttribute("username", user.getUsername());
             response.sendRedirect("/");
         } else {
             out.write("<H2 class=\"text-danger\">Помилка авторизації!</H2>");

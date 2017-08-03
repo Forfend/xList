@@ -1,7 +1,13 @@
 package com.xList.Servlets;
 
 import com.xList.Model.User;
+import com.xList.service.IndexTemplate;
+import com.xList.view.PageParts;
+import com.xList.views.IndexHtmlView;
+import com.xList.views.NoteHtmlViews;
+import com.xList.views.PathHtml;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "Start", value = {"/*"})
+@WebServlet(name = "Start", value = {"/*"}, loadOnStartup = 1)
 public class Start extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
@@ -19,11 +25,16 @@ public class Start extends HttpServlet {
                 "UTF-8");
         String loginPassword = new String(request.getParameter("loginPassword").getBytes("iso-8859-1"),
                 "UTF-8");
-        User user = new User(emailLogin, loginPassword);
+        User user = new User();
+        user.setLoginUserName(emailLogin);
+        user.setLoginPassword(loginPassword);
+
+
         HttpSession session = request.getSession();
-        if(user.checkLogin()) {
+        if (user.checkLogin()) {
             session.setAttribute("username", user.getUsername());
-            response.sendRedirect("/");
+            session.setAttribute("user_id", user.getId());
+            response.sendRedirect("/note/show");
         } else {
             out.write("<H2 class=\"text-danger\">Помилка авторизації!</H2>");
         }
@@ -32,12 +43,15 @@ public class Start extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
+        IndexTemplate indexTemplate = new IndexTemplate(out);
+
+
         switch (request.getPathInfo()) {
             case "/":
-                if(session.getAttribute("username") != null) {
-                    out.write("<H2 class=\"text-success\">Починаємо роботу...</H2>");
+                if (session.getAttribute("username") != null) {
+                    response.sendRedirect("/note/show");
                 } else {
-                    out.write(PageParts.getPartialHtml(getServletContext().getRealPath("/html/login-form.html")));
+                    indexTemplate.showLoginForm();
                 }
                 break;
             case "/logout":
@@ -45,7 +59,22 @@ public class Start extends HttpServlet {
                 session.removeAttribute("memo");
                 response.sendRedirect("/");
                 break;
+            default:
+                response.sendRedirect("/");
+        }
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        PathHtml pathHtml = PathHtml.getInstance();
+
+        if (pathHtml.getPath().equals("")){
+            pathHtml.setPath(getServletContext().getRealPath("/html/"));
         }
 
+        NoteHtmlViews.getInstance();
+        IndexHtmlView.getInstance();
     }
 }

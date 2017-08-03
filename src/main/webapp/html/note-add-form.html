@@ -1,0 +1,80 @@
+<div class="row">
+    <form action="NoteServlet" method="POST" class="form-horizontal">
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+            <div class="form-group">
+                <label for="textInputTitle">Заголовок</label>
+                <input type="text" class="form-control" id="textInputTitle" name="textInputTitle"/>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p><strong>Колір фону</strong></p>
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="radio-item" id="radio-item-color1">
+                            <input type="radio" id="ritemcolor1" name="radioitemcolor" value="FFFFFF"/>
+                            <label for="ritemcolor1"></label>
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="radio-item" id="radio-item-color2">
+                            <input type="radio" id="ritemcolor2" name="radioitemcolor" value="FF8A80"/>
+                            <label for="ritemcolor2"></label>
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="radio-item" id="radio-item-color3">
+                            <input type="radio" id="ritemcolor3" name="radioitemcolor" value="FCD287"/>
+                            <label for="ritemcolor3"></label>
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="radio-item" id="radio-item-color4">
+                            <input type="radio" id="ritemcolor4" name="radioitemcolor" value="FFFF8D"/>
+                            <label for="ritemcolor4"></label>
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="radio-item" id="radio-item-color5">
+                            <input type="radio" id="ritemcolor5" name="radioitemcolor" value="CFD8DC"/>
+                            <label for="ritemcolor5"></label>
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="radio-item" id="radio-item-color6">
+                            <input type="radio" id="ritemcolor6" name="radioitemcolor" value="AFE5FD"/>
+                            <label for="ritemcolor6"></label>
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="radio-item" id="radio-item-color7">
+                            <input type="radio" id="ritemcolor7" name="radioitemcolor" value="A7FFEB"/>
+                            <label for="ritemcolor7"></label>
+                        </div>
+                    </div>
+                    <div class="col-xs-1" id="radio-item-color8">
+                        <div class="radio-item">
+                            <input type="radio" id="ritemcolor8" name="radioitemcolor" value="CCFF90"/>
+                            <label for="ritemcolor8"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+            <div class="form-group">
+                <label for="summernote">Нотатка</label>
+                <textarea class="form-control" id="summernote" name="textInputMemo" rows="10"></textarea>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-xs-offset-6 col-md-3 col-md-offset-6 col-lg-2 col-lg-offset-6">
+            <button type="submit" class="btn btn-default btn-block">Відіслати</button>
+        </div>
+    </form>
+</div>

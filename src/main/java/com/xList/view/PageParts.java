@@ -1,4 +1,4 @@
-package com.xList.Servlets;
+package com.xList.view;
 
 
 import java.io.BufferedReader;

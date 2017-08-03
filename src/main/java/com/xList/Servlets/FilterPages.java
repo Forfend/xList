@@ -1,6 +1,9 @@
 package com.xList.Servlets;
 
 
+import com.xList.view.PageParts;
+import com.xList.views.IndexHtmlView;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -22,19 +25,19 @@ public class FilterPages implements Filter{
         PrintWriter out=resp.getWriter();
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        String top = PageParts.getPartialHtml(req.getServletContext().getRealPath("/html/top.html"));
+
+        String top = IndexHtmlView.getInstance().getTopHtml();
         HttpSession session = request.getSession();
         if(session.getAttribute("username") == null && (!request.getServletPath().equals(""))) {
             response.sendRedirect("/");
             System.out.println("redirect");
         }
         if(session.getAttribute("username") != null) {
-            String logout = PageParts.getPartialHtml(req.getServletContext().getRealPath("/html/logout-button.html"));
-            top = top.replace("<!-- servletInsert01 -->", logout);
+            top = top.replace("<!--servletInsert01-->",IndexHtmlView.getInstance().getLogoutButton());
         }
         out.write(top);
         chain.doFilter(req, resp);
-        out.write(PageParts.getPartialHtml(req.getServletContext().getRealPath("/html/bottom.html")));
+        out.write(IndexHtmlView.getInstance().getBottomHtml());
     }
 
     @Override

@@ -8,7 +8,7 @@ package com.xList.Model;
 public abstract class ActiveRecord {
 
     static final String JDBS_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/xlist?user=root&password=1111";
+    static final String DB_URL="jdbc:mysql://localhost/xlist?user=root&password=1111";
 
     public ActiveRecord(){
         try {

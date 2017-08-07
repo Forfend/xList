@@ -1,6 +1,6 @@
 package com.xList.Servlets;
 
-import com.xList.Model.User;
+
 import com.xList.service.IndexTemplate;
 import com.xList.view.PageParts;
 import com.xList.views.IndexHtmlView;
@@ -21,22 +21,10 @@ import java.io.PrintWriter;
 public class Start extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        String emailLogin = new String(request.getParameter("emailLogin").getBytes("iso-8859-1"),
-                "UTF-8");
-        String loginPassword = new String(request.getParameter("loginPassword").getBytes("iso-8859-1"),
-                "UTF-8");
-        User user = new User();
-        user.setLoginUserName(emailLogin);
-        user.setLoginPassword(loginPassword);
-
-
-        HttpSession session = request.getSession();
-        if (user.checkLogin()) {
-            session.setAttribute("username", user.getUsername());
-            session.setAttribute("user_id", user.getId());
-            response.sendRedirect("/note/show");
-        } else {
-            out.write("<H2 class=\"text-danger\">Помилка авторизації!</H2>");
+        IndexTemplate indexTemplate=new IndexTemplate(out);
+        HttpSession session=request.getSession();
+        if (indexTemplate.checkLogin(request,session)){
+            response.sendRedirect("/");
         }
     }
 

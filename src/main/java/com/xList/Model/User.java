@@ -13,7 +13,9 @@ public class User extends ActiveRecord {
     private String loginPassword;
 
     public boolean checkLogin() {
-        if (getUsername().equalsIgnoreCase("vragcuctemi@gmail.com") && getPassword().equalsIgnoreCase("123"))
+        findByUsername(loginUserName);
+        if(getUsername() == null) return false;
+        if (getPassword().equals(loginPassword))
             return true;
         return false;
     }
@@ -29,13 +31,13 @@ public class User extends ActiveRecord {
     private boolean findByUsername(String username) {
         try (Connection connection = DriverManager.getConnection(DB_URL);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT id,username,password,name FROM user WHERE user.username=\"" + username + "\";");) {
+             ResultSet resultSet = statement.executeQuery("SELECT id,username,password,name FROM user WHERE user.username=\"" + username + "\"");
+        ){
             if (resultSet.next()) {
                 this.id = resultSet.getInt(1);
                 this.username = resultSet.getString(2);
                 this.password = resultSet.getString(3);
                 this.name = resultSet.getString(4);
-                System.out.println(this);
                 return true;
             }
         } catch (SQLException e) {

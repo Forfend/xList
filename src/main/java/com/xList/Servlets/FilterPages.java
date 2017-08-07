@@ -1,7 +1,6 @@
 package com.xList.Servlets;
 
 
-import com.xList.view.PageParts;
 import com.xList.views.IndexHtmlView;
 
 import javax.servlet.*;
@@ -30,10 +29,9 @@ public class FilterPages implements Filter{
         HttpSession session = request.getSession();
         if(session.getAttribute("username") == null && (!request.getServletPath().equals(""))) {
             response.sendRedirect("/");
-            System.out.println("redirect");
         }
         if(session.getAttribute("username") != null) {
-            top = top.replace("<!--servletInsert01-->",IndexHtmlView.getInstance().getLogoutButton());
+            top = top.replace("<!-- servletInsert01 -->",IndexHtmlView.getInstance().getLogoutButton());
         }
         out.write(top);
         chain.doFilter(req, resp);

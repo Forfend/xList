@@ -28,4 +28,21 @@ public class UserImplementation implements UserDao {
         }
         return null;
     }
+
+    @Override
+    public void registerUser(User user) {
+        DataSource source=new DataSource();
+
+        try (Connection connection=source.getConnection();
+        PreparedStatement statement = (user.getId() == 0L) ? connection.prepareStatement("INSERT INTO user (username, password, name) VALUES (?,?,?)") :
+        connection.prepareStatement("UPDATE user SET username=?, password=?, name=? WHERE id=" + user.getId())){
+            statement.setString(1,user.getUsername());
+            statement.setString(2,user.getPassword());
+            statement.setString(3,user.getName());
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -2,12 +2,10 @@ package com.xList.Servlets;
 
 
 import com.xList.service.IndexTemplate;
-import com.xList.view.PageParts;
 import com.xList.views.IndexHtmlView;
 import com.xList.views.NoteHtmlViews;
 import com.xList.views.PathHtml;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,10 +19,20 @@ import java.io.PrintWriter;
 public class Start extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        IndexTemplate indexTemplate=new IndexTemplate(out);
-        HttpSession session=request.getSession();
-        if (indexTemplate.checkLogin(request,session)){
-            response.sendRedirect("/");
+        IndexTemplate indexTemplate = new IndexTemplate(out);
+        HttpSession session = request.getSession();
+
+        switch (request.getPathInfo()) {
+            case "/register":
+                if (indexTemplate.checkRegistration(request)) {
+                    response.sendRedirect("/login");
+                }
+                break;
+            case "/login":
+                if (indexTemplate.checkLogin(request, session)) {
+                    response.sendRedirect("/");
+                }
+                break;
         }
     }
 
@@ -47,6 +55,12 @@ public class Start extends HttpServlet {
                 session.removeAttribute("memo");
                 response.sendRedirect("/");
                 break;
+            case "/register":
+                indexTemplate.showRegisterForm();
+                break;
+            case "/profile-edit":
+                indexTemplate.showUserProlife(session.getAttribute("username").toString());
+                break;
             default:
                 response.sendRedirect("/");
         }
@@ -58,7 +72,7 @@ public class Start extends HttpServlet {
 
         PathHtml pathHtml = PathHtml.getInstance();
 
-        if (pathHtml.getPath().equals("")){
+        if (pathHtml.getPath().equals("")) {
             pathHtml.setPath(getServletContext().getRealPath("/html/"));
         }
 

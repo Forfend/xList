@@ -4,7 +4,7 @@ import com.xList.dao.CRUDrepository.NoteDao;
 import com.xList.dao.entities.Note;
 import com.xList.dao.repository.NoteImplementatoin;
 import com.xList.service.NoteTemplate;
-import com.xList.view.PageParts;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

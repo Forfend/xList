@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 
 public class PageParts {
 
+
+
     /**
      * Add simple HTML tag as String data type
      *

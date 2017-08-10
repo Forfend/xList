@@ -3,15 +3,44 @@ package com.xList.service;
 import com.xList.dao.CRUDrepository.UserDao;
 import com.xList.dao.entities.User;
 import com.xList.dao.repository.UserImplementation;
+import com.xList.loger.SaveLogError;
 import com.xList.views.IndexHtmlView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+
 public class IndexTemplate {
+
+    private SaveLogError show = e -> {
+        System.out.println(e);
+        System.out.println(LocalDate.now());
+    };
+
+    private SaveLogError save = e -> {
+        Path file = Paths.get("E:/Project/xList/LogOfError.txt").toAbsolutePath();
+        Charset charset = Charset.forName("UTF-8");
+        BufferedWriter writer = null;
+        try {
+            writer= Files.newBufferedWriter(file,charset,APPEND,CREATE);
+            String message = e.toString();
+            writer.write(message,0,message.length());
+            writer.write(LocalDate.now().toString());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    };
 
     interface FormField<E> {
         String check(E e);
@@ -53,6 +82,8 @@ public class IndexTemplate {
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            show.saveAndShowError(e);
+            save.saveAndShowError(e);
         }
         return false;
     }
@@ -125,6 +156,8 @@ public class IndexTemplate {
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            show.saveAndShowError(e);
+            save.saveAndShowError(e);
         }
 
         out.println(regForm);

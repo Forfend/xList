@@ -44,7 +44,6 @@ public class NoteServlet extends HttpServlet {
             note = new Note(Long.parseLong(noteId), memo, textInputTitle, false, LocalDate.now().toString(), color,
                     Long.parseLong(session.getAttribute("user_id").toString()));
         }
-
         noteDao.addNote(note);
         response.sendRedirect("/note/show");
 

@@ -26,12 +26,14 @@ public class FilterPages implements Filter{
         HttpServletResponse response = (HttpServletResponse) resp;
 
         String top = IndexHtmlView.getInstance().getTopHtml();
+        String logOutBtn = IndexHtmlView.getInstance().getLogoutButton();
         HttpSession session = request.getSession();
         if(session.getAttribute("username") == null && (!request.getServletPath().equals(""))) {
             response.sendRedirect("/");
         }
         if(session.getAttribute("username") != null) {
-            top = top.replace("<!-- servletInsert01 -->",IndexHtmlView.getInstance().getLogoutButton());
+            logOutBtn = logOutBtn.replace("<!--username-->", session.getAttribute("username").toString());
+            top = top.replace("<!-- servletInsert01 -->",logOutBtn);
         }
         out.write(top);
         chain.doFilter(req, resp);

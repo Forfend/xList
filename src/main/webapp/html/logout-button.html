@@ -1,7 +1,12 @@
-<ul class="nav navbar-nav navbar-right">
-    <li><a href="/logout">
-        <button type="button" class="btn btn-default" aria-label="Right Align">
-            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-        </button>
-    </a></li>
+<ul class="nav navbar-nav navbar-right loguot-btn">
+    <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><!--username--> <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="/note/show">Show notes</a></li>
+            <li><a href="/note/add">Add notes</a></li>
+            <li><a href="/note/info">Info</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/logout">Log out</a></li>
+        </ul>
+    </div>
 </ul>

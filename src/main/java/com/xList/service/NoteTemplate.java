@@ -16,14 +16,14 @@ public class NoteTemplate {
     public void showShortNotes(List<Note> notes) {
         if (out == null) return;
 
-        out.println("<div class=\"row\"");
+        out.println("<div class=\"row\">");
         for (Note oneNote : notes) {
             String htmlNote = NoteHtmlViews.getInstance().getShortNoteView();
             htmlNote = htmlNote.replace("<!--insert-id-here-->", String.valueOf(oneNote.getId()));
             htmlNote = htmlNote.replace("<!--insert-title-here-->", String.valueOf(oneNote.getNoteTitle()));
-            String shortstr = oneNote.getNoteText().length() < 20 ? oneNote.getNoteText() : oneNote.getNoteText().substring(0, 20);
+            String shortstr = oneNote.getNoteText().length() < 100 ? oneNote.getNoteText() : oneNote.getNoteText().substring(0, 100);
             htmlNote = htmlNote.replace("<!--insert-memo-here-->", shortstr);
-            htmlNote = htmlNote.replace("insert-color-here", "#" + oneNote.getColor());
+            htmlNote = htmlNote.replace("/*insert-color-here*/", "#" + oneNote.getColor());
             out.println(htmlNote);
         }
         out.println("</div>");

@@ -2,40 +2,11 @@ package com.xList.dao.repository;
 
 import com.xList.dao.CRUDrepository.UserDao;
 import com.xList.dao.entities.User;
-import com.xList.loger.SaveLogError;
-
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
-import java.time.LocalDate;
 
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
 
 public class UserImplementation implements UserDao {
 
-    private SaveLogError show = e -> {
-        System.out.println(e);
-        System.out.println(LocalDate.now());
-    };
-
-    private SaveLogError save = e -> {
-        Path file = Paths.get("E:/Project/xList/LogOfError.txt").toAbsolutePath();
-        Charset charset = Charset.forName("UTF-8");
-        BufferedWriter writer = null;
-        try {
-            writer= Files.newBufferedWriter(file,charset,APPEND,CREATE);
-            String message = e.toString();
-            writer.write(message,0,message.length());
-            writer.write(LocalDate.now().toString());
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-    };
 
     @Override
     public User findByUsername(String username) {
@@ -55,8 +26,6 @@ public class UserImplementation implements UserDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            show.saveAndShowError(e);
-            save.saveAndShowError(e);
         }
         return null;
     }
@@ -75,8 +44,6 @@ public class UserImplementation implements UserDao {
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
-            show.saveAndShowError(e);
-            save.saveAndShowError(e);
         }
     }
 }

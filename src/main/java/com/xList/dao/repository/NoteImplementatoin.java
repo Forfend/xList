@@ -2,42 +2,13 @@ package com.xList.dao.repository;
 
 import com.xList.dao.CRUDrepository.NoteDao;
 import com.xList.dao.entities.Note;
-import com.xList.loger.SaveLogError;
-
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
 
 public class NoteImplementatoin implements NoteDao {
 
-    private SaveLogError show = e -> {
-        System.out.println(e);
-        System.out.println(LocalDate.now());
-    };
-
-    private SaveLogError save = e -> {
-        Path file = Paths.get("xList/LogOfError.txt").toAbsolutePath();
-        Charset charset = Charset.forName("UTF-8");
-        BufferedWriter writer = null;
-        try {
-            writer= Files.newBufferedWriter(file,charset,APPEND,CREATE);
-            String message = e.toString();
-            writer.write(message,0,message.length());
-            writer.write(LocalDate.now().toString());
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-    };
 
     @Override
     public void addNote(Note note) {
@@ -55,8 +26,7 @@ public class NoteImplementatoin implements NoteDao {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            show.saveAndShowError(e);
-            save.saveAndShowError(e);
+            e.printStackTrace();
         }
 
     }
@@ -70,8 +40,6 @@ public class NoteImplementatoin implements NoteDao {
                 statement.executeUpdate("DELETE FROM notes WHERE id =" + id);
             } catch (SQLException e) {
                 e.printStackTrace();
-                show.saveAndShowError(e);
-                save.saveAndShowError(e);
             }
         }
     }
@@ -97,8 +65,6 @@ public class NoteImplementatoin implements NoteDao {
             }
         }catch (SQLException e){
             e.printStackTrace();
-            show.saveAndShowError(e);
-            save.saveAndShowError(e);
         }
 
         return null;
@@ -126,8 +92,6 @@ public class NoteImplementatoin implements NoteDao {
             }
         }catch (SQLException e){
             e.printStackTrace();
-            show.saveAndShowError(e);
-            save.saveAndShowError(e);
         }
 
         return notes;

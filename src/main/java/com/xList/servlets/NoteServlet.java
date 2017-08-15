@@ -1,4 +1,4 @@
-package com.xList.Servlets;
+package com.xList.servlets;
 
 import com.xList.dao.CRUDrepository.NoteDao;
 import com.xList.dao.entities.Note;

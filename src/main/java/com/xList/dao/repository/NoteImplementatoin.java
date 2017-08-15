@@ -2,17 +2,17 @@ package com.xList.dao.repository;
 
 import com.xList.dao.CRUDrepository.NoteDao;
 import com.xList.dao.entities.Note;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class NoteImplementatoin implements NoteDao {
+
 
     @Override
     public void addNote(Note note) {
         DataSource source = new DataSource();
-
         try (Connection connection = source.getConnection();
              PreparedStatement statement = (note.getId() == 0L) ? connection.prepareStatement("INSERT INTO `notes`(`note`,`note_title`,`is_archieve`,`date_added`,`color`,`user_id`) VALUES (?,?,?,?,?,?)") :
                      connection.prepareStatement("UPDATE notes SET note=?,note_title=?,is_archieve=?,date_added=?,color=?,user_id=? WHERE id=" + note.getId())) {
@@ -22,8 +22,11 @@ public class NoteImplementatoin implements NoteDao {
             statement.setString(4, note.getDateAdded());
             statement.setString(5, note.getColor());
             statement.setLong(6, note.getUserId());
-        } catch (SQLException e) {
 
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
@@ -34,7 +37,7 @@ public class NoteImplementatoin implements NoteDao {
         if (id > 0L) {
             try (Connection connection = source.getConnection();
                  Statement statement = connection.createStatement()) {
-                statement.executeQuery("DELETE FROM notes WHERE id =" + id);
+                statement.executeUpdate("DELETE FROM notes WHERE id =" + id);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

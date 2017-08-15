@@ -1,5 +1,6 @@
 package com.xList.dao.repository;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ public class DataSource implements AutoCloseable{
     static final String DB_URL = "jdbc:mysql://localhost/xlist?user=root&password=1111";
 
     private Connection connection = null;
+
 
     public DataSource() {
         try {

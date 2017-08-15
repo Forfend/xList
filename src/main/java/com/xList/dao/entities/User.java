@@ -1,16 +1,12 @@
-package com.xList.Model;
+package com.xList.dao.entities;
 
-import java.sql.*;
+public class User {
 
-public class User extends ActiveRecord {
-
-    private int id;
+    private long id;
     private String username;
     private String password;
     private String name;
-
-    private String loginUserName;
-    private String loginPassword;
+    
 
     public boolean checkLogin() {
         findByUsername(loginUserName);
@@ -20,14 +16,19 @@ public class User extends ActiveRecord {
         return false;
     }
 
+=======
+>>>>>>> dev:src/main/java/com/xList/dao/entities/User.java
     public User() {
     }
 
-    public User(String username, String password) {
+    public User(long id, String username, String password, String name) {
+        this.id = id;
         this.username = username;
         this.password = password;
+        this.name = name;
     }
 
+<<<<<<< HEAD:src/main/java/com/xList/Model/User.java
     private boolean findByUsername(String username) {
         try (Connection connection = DriverManager.getConnection(DB_URL);
              Statement statement = connection.createStatement();
@@ -61,13 +62,20 @@ public class User extends ActiveRecord {
 
     public void setLoginPassword(String loginPassword) {
         this.loginPassword = loginPassword;
+=======
+    public User(String username, String password, String name) {
+        this.id = 0L;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+>>>>>>> dev:src/main/java/com/xList/dao/entities/User.java
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

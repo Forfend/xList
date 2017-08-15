@@ -1,17 +1,20 @@
 package com.xList.views;
 
+
+
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
 public class PathHtml {
 
     private String path = "";
     private static PathHtml ourInstance = new PathHtml();
-
 
     public static PathHtml getInstance() {
         return ourInstance;

@@ -11,7 +11,7 @@ public interface CategoryDao {
 
     void deleteCategory(long id);
 
-    Category getCategory(long id, long user_id);
+    Category getCategory(long id, long user_id, long note_id);
 
     List<Category> getAllCategory(long user_id);
 

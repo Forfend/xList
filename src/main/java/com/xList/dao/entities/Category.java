@@ -9,18 +9,22 @@ public class Category {
 
     private String category_name;
 
+    private long note_id;
+
     public Category() {
     }
 
-    public Category(long user_id, String category_name) {
+    public Category(long user_id, String category_name, long note_id) {
         this.user_id = user_id;
         this.category_name = category_name;
+        this.note_id = note_id;
     }
 
-    public Category(long id, long user_id, String category_name) {
+    public Category(long id, long user_id, String category_name, long note_id) {
         this.id = id;
         this.user_id = user_id;
         this.category_name = category_name;
+        this.note_id = note_id;
     }
 
     public long getId() {
@@ -47,6 +51,14 @@ public class Category {
         this.category_name = category_name;
     }
 
+    public long getNote_id() {
+        return note_id;
+    }
+
+    public void setNote_id(long note_id) {
+        this.note_id = note_id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,6 +68,7 @@ public class Category {
 
         if (id != category.id) return false;
         if (user_id != category.user_id) return false;
+        if (note_id != category.note_id) return false;
         return category_name != null ? category_name.equals(category.category_name) : category.category_name == null;
     }
 
@@ -64,6 +77,7 @@ public class Category {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (int) (user_id ^ (user_id >>> 32));
         result = 31 * result + (category_name != null ? category_name.hashCode() : 0);
+        result = 31 * result + (int) (note_id ^ (note_id >>> 32));
         return result;
     }
 
@@ -73,6 +87,7 @@ public class Category {
                 "id=" + id +
                 ", user_id=" + user_id +
                 ", category_name='" + category_name + '\'' +
+                ", note_id=" + note_id +
                 '}';
     }
 }

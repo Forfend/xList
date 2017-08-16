@@ -14,10 +14,11 @@ public class CategoryImpl implements CategoryDao {
         DataSource source = new DataSource();
 
         try (Connection connection = source.getConnection();
-             PreparedStatement statement = ((category.getId() == 0L) ? connection.prepareStatement("INSERT INTO `categories`(`user_id`,`category_name`) VALUES (?,?)") :
-                     connection.prepareStatement("UPDATE categories SET user_id=?,category_name=? WHERE id=" + category.getId()))) {
+             PreparedStatement statement = ((category.getId() == 0L) ? connection.prepareStatement("INSERT INTO `categories`(`user_id`,`category_name`, `note_id`) VALUES (?,?,?)") :
+                     connection.prepareStatement("UPDATE categories SET user_id=?,category_name=?, note_id=? WHERE id=" + category.getId()))) {
             statement.setLong(1, category.getUser_id());
             statement.setString(2, category.getCategory_name());
+            statement.setLong(3, category.getNote_id());
 
             statement.executeUpdate();
 
@@ -46,17 +47,17 @@ public class CategoryImpl implements CategoryDao {
     }
 
     @Override
-    public Category getCategory(long id, long user_id) {
+    public Category getCategory(long id, long user_id, long note_id) {
         DataSource source=new DataSource();
 
         try (Connection connection=source.getConnection();
              Statement statement=connection.createStatement();
-             ResultSet set = statement.executeQuery("SELECT * FROM categories WHERE user_id=" + user_id + " AND id=" + id)){
+             ResultSet set = statement.executeQuery("SELECT * FROM categories WHERE user_id=" + user_id + " AND note_id="+ note_id+ "AND id=" + id)){
             if (set.next()){
                 Long idLocal=set.getLong("id");
                 String category_name =set.getString("category_name");
 
-                Category  category = new Category(idLocal.longValue(),user_id, category_name);
+                Category  category = new Category(idLocal.longValue(),user_id, category_name, note_id);
 
                 return category;
             }
@@ -78,8 +79,9 @@ public class CategoryImpl implements CategoryDao {
             while (set.next()){
                 Long idLocal=set.getLong("id");
                 String category_name = set.getString("category_name");
+                Long note_id = set.getLong("note_id");
 
-                Category category=new Category(idLocal.longValue(), user_id, category_name);
+                Category category=new Category(idLocal.longValue(), user_id, category_name, note_id);
 
                 categories.add(category);
             }

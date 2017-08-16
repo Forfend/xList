@@ -1,4 +1,4 @@
-package com.xList.Servlets;
+package com.xList.servlets;
 
 import com.xList.dao.CRUDrepository.NoteDao;
 import com.xList.dao.entities.Note;
@@ -16,9 +16,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Logger;
 
 @WebServlet(name = "Servlet", value = {"/note/*"})
 public class NoteServlet extends HttpServlet {
+
+    private Logger logger = Logger.getLogger("com.xList.servlets");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
@@ -54,6 +57,8 @@ public class NoteServlet extends HttpServlet {
         HttpSession session = request.getSession();
         int user_id = Integer.parseInt(session.getAttribute("user_id").toString());
         NoteTemplate noteTemplate = new NoteTemplate(out);
+
+        logger.fine("pathInfo\t"+ request.getPathInfo());
 
         NoteDao noteDao = new NoteImplementatoin();
 

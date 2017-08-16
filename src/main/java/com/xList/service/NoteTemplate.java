@@ -1,12 +1,30 @@
 package com.xList.service;
 
+import com.sun.deploy.net.HttpRequest;
+import com.xList.dao.CRUDrepository.NoteDao;
+import com.xList.dao.CRUDrepository.SharedNotesDao;
+import com.xList.dao.CRUDrepository.UserDao;
 import com.xList.dao.entities.Note;
+import com.xList.dao.entities.SharedNotes;
+import com.xList.dao.entities.User;
+import com.xList.dao.repository.NoteImplementatoin;
+import com.xList.dao.repository.SharedNotesImplementation;
+import com.xList.dao.repository.UserImplementation;
 import com.xList.views.NoteHtmlViews;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class NoteTemplate {
+
+    private Logger logger = Logger.getLogger("com.xList.dao.repository");
+
     private PrintWriter out;
 
     public NoteTemplate(PrintWriter out) {
@@ -71,5 +89,69 @@ public class NoteTemplate {
             aform = aform.replace("checked" + i, "");
         }
         out.println(aform);
+    }
+
+    public List<Note> getSearchNotes(HttpServletRequest request, HttpSession session) {
+        try {
+            Long user_id = (Long) session.getAttribute("user_id");
+            if (user_id == null) return null;
+
+            String serchTextByUser = new String(request.getParameter("searchText").getBytes("iso-8859-1"),
+                    "UTF-8");
+            logger.fine("search text " + serchTextByUser + " user_id " + user_id);
+
+            NoteDao noteDao = new NoteImplementatoin();
+            return noteDao.searchByNoteTitleByNote(serchTextByUser, user_id);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void getSharingNotes(HttpServletRequest request, HttpSession session) {
+        if (request == null) return;
+        logger.fine("getSharingNotes\t");
+        long noteId = Long.parseLong(request.getParameter("noteIdSearch"));
+        long userId = Long.parseLong(session.getAttribute("user_id").toString());
+
+        NoteDao noteDao = new NoteImplementatoin();
+        Note note = noteDao.getNote(userId,noteId);
+        logger.fine(note.toString());
+        this.showEditForm(note);
+
+        try {
+            String searchText = new String(request.getParameter("search-sharing-user").getBytes("iso-8859-1"),"UTF-8");
+            UserDao userDao = new UserImplementation();
+            List<User> users = userDao.findByUsernameByName(searchText);
+            if (users == null) return;
+            logger.fine("founded users\t"+users.size());
+            out.println("<div class=\"row\">");
+            out.println("<div class=\"col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3\">");
+            out.println("<ul class=\"list-group\">\n\t\t");
+
+            String resultString = users.stream()
+                    .map(u-> "<a class=\"list-group-item\" " +
+                            "href=\"/note/sharing-user-add-note?userid=" + u.getId() + "&noteid=" + noteId  + "\" >" +
+                            "<span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>&nbsp;&nbsp;" +
+                            u.getName() + "\t" +
+                            "&nbsp;&nbsp;<span class=\"glyphicon glyphicon-envelope\" aria-hidden=\"true\"></span>&nbsp;&nbsp;" +
+                            u.getUsername() +
+                            "<span class=\"glyphicon glyphicon-plus pull-right\" aria-hidden=\"true\"></span>" +
+                            "</a>")
+                    .collect(Collectors.joining("\n"));
+            out.println(resultString);
+            out.println("\n\t\t</ul>\n\t\t</div>\n</div>");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addSharingUser(HttpServletRequest request){
+        long userId = Long.parseLong(request.getParameter("userid"));
+        long noteId = Long.parseLong(request.getParameter("noteid"));
+        SharedNotesDao sharedNotesDao = new SharedNotesImplementation();
+        SharedNotes sharedNotes = new SharedNotes(userId,noteId);
+        sharedNotesDao.addSharedNote(sharedNotes);
     }
 }

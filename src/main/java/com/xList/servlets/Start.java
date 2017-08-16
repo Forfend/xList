@@ -20,14 +20,14 @@ import java.util.logging.*;
 @WebServlet(name = "Start", value = {"/*"}, loadOnStartup = 1)
 public class Start extends HttpServlet {
 
-  //  private static Logger logger=Logger.getLogger("com.xList.servlets");
+    private static Logger logger = Logger.getLogger("com.xList.servlets");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         IndexTemplate indexTemplate = new IndexTemplate(out);
         HttpSession session = request.getSession();
 
-      //  logger.fine("pathInfo" + request.getPathInfo());
+        logger.fine("pathInfo" + request.getPathInfo());
         switch (request.getPathInfo()) {
             case "/register":
                 if (indexTemplate.checkRegistration(request)) {
@@ -47,7 +47,7 @@ public class Start extends HttpServlet {
         HttpSession session = request.getSession();
         IndexTemplate indexTemplate = new IndexTemplate(out);
 
-
+        logger.fine("pathInfo\t" + request.getPathInfo());
         switch (request.getPathInfo()) {
             case "/":
                 if (session.getAttribute("username") != null) {
@@ -57,6 +57,7 @@ public class Start extends HttpServlet {
                 }
                 break;
             case "/logout":
+                logger.warning("user was logout\t" + session.getAttribute("username"));
                 session.removeAttribute("username");
                 session.removeAttribute("memo");
                 response.sendRedirect("/");
@@ -82,17 +83,17 @@ public class Start extends HttpServlet {
             pathHtml.setPath(getServletContext().getRealPath("/html/"));
         }
 
-//        try {
-//            FileHandler fileHandler = new FileHandler(getServletContext().getRealPath("/com/xList/logs/logger.log"));
-//            Logger.getLogger("").addHandler(fileHandler);
-//            Logger.getLogger("").addHandler(new ConsoleHandler());
-//            Logger.getLogger("").setLevel(Level.ALL);
-//
-//            Logger.getLogger("com.xList.servlets").setLevel(Level.WARNING);
-//            Logger.getLogger("com.xList.dao.repository").setLevel(Level.FINE);
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
+        try {
+            FileHandler fileHandler = new FileHandler(getServletContext().getRealPath("logs/application-logs.log"));
+            Logger.getLogger("").addHandler(fileHandler);
+            Logger.getLogger("").addHandler(new ConsoleHandler());
+            Logger.getLogger("").setLevel(Level.ALL);
+
+            Logger.getLogger("com.xList.servlets").setLevel(Level.WARNING);
+            Logger.getLogger("com.xList.dao.repository").setLevel(Level.FINE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         NoteHtmlViews.getInstance();
         IndexHtmlView.getInstance();

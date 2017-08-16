@@ -5,7 +5,7 @@ import com.xList.service.IndexTemplate;
 import com.xList.views.IndexHtmlView;
 import com.xList.views.NoteHtmlViews;
 import com.xList.views.PathHtml;
-import sun.rmi.runtime.Log;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,6 +1,6 @@
 package com.xList.service;
 
-import com.sun.deploy.net.HttpRequest;
+
 import com.xList.dao.CRUDrepository.NoteDao;
 import com.xList.dao.CRUDrepository.SharedNotesDao;
 import com.xList.dao.CRUDrepository.UserDao;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;

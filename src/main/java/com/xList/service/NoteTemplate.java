@@ -153,4 +153,5 @@ public class NoteTemplate {
         SharedNotes sharedNotes = new SharedNotes(userId,noteId);
         sharedNotesDao.addSharedNote(sharedNotes);
     }
+    
 }

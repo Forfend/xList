@@ -161,4 +161,14 @@ public class IndexTemplate {
         registrationForm = registrationForm.replace("Зареєструватись", "Зберегти");
         out.println(registrationForm);
     }
+
+    public String getLoggedUserBar(HttpServletRequest request){
+        String rightBar = IndexHtmlView.getInstance().getRightBar();
+        String url = "//" + request.getServerName()
+                + ((request.getServerPort()==8080)? "" : ":"+request.getServerPort())
+                + "/note/search";
+        rightBar = rightBar.replace("insert-serach-notes-url-here",url);
+        return rightBar;
+    }
+
 }

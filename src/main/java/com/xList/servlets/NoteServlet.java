@@ -25,31 +25,40 @@ public class NoteServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        NoteDao noteDao = new NoteImplementatoin();
-
-        String memo = new String(request.getParameter("textInputMemo").getBytes("iso-8859-1"),
-                "UTF-8");
-        String textInputTitle = new String(request.getParameter("textInputTitle").getBytes("iso-8859-1"),
-                "UTF-8");
-        String color = request.getParameter("radioitemcolor");
-        if (color == null)
-            color = "FFFFFF";
-
         HttpSession session = request.getSession();
 
-        String noteId = request.getParameter("noteId");
+        switch (request.getPathInfo()){
+            case "/note/add":
+            case "/note/edit":
+                NoteDao noteDao = new NoteImplementatoin();
+                logger.fine("doPost pathInfo\t"+request.getPathInfo());
+                String memo = new String(request.getParameter("textInputMemo").getBytes("iso-8859-1"),
+                        "UTF-8");
+                String textInputTitle = new String(request.getParameter("textInputTitle").getBytes("iso-8859-1"),
+                        "UTF-8");
+                String color = request.getParameter("radioitemcolor");
+                if (color == null)
+                    color = "FFFFFF";
 
-        Note note;
-        if (noteId == null) {
-            note = new Note(memo, textInputTitle, false, LocalDate.now().toString(), color,
-                    Long.parseLong(session.getAttribute("user_id").toString()));
-        } else {
-            note = new Note(Long.parseLong(noteId), memo, textInputTitle, false, LocalDate.now().toString(), color,
-                    Long.parseLong(session.getAttribute("user_id").toString()));
+                String noteId = request.getParameter("noteId");
+
+                Note note;
+                if (noteId == null) {
+                    note = new Note(memo, textInputTitle, false, LocalDate.now().toString(), color,
+                            Long.parseLong(session.getAttribute("user_id").toString()));
+                } else {
+                    note = new Note(Long.parseLong(noteId), memo, textInputTitle, false, LocalDate.now().toString(), color,
+                            Long.parseLong(session.getAttribute("user_id").toString()));
+                }
+                noteDao.addNote(note);
+                response.sendRedirect("/note/show");
+                break;
+            case "/note-share":
+                logger.fine("/note-share\t"+request.getParameter("search-sharing-user"));
+                NoteTemplate noteTemplate = new NoteTemplate(out);
+                noteTemplate.getSearchNotes(request,session);
+                break;
         }
-        noteDao.addNote(note);
-        response.sendRedirect("/note/show");
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -82,6 +91,10 @@ public class NoteServlet extends HttpServlet {
                 long delete = Long.parseLong(request.getParameter("id"));
                 noteDao.deleteNote(delete);
                 response.sendRedirect("/note/show");
+                break;
+            case "/sharing-user-add-note":
+                logger.fine("Sharing user id is\t"+request.getParameter("userId"));
+                noteTemplate.addSharingUser(request);
                 break;
             default:
                 response.sendRedirect("/");

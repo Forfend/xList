@@ -7,8 +7,8 @@ public class IndexHtmlView {
     private final String topHtml;
     private final String bottomHtml;
     private final String loginForm;
-    private final String logoutButton;
     private final String registerForm;
+    private final String rightBar;
 
     public static IndexHtmlView getInstance(){
         if (ourInstance==null){
@@ -23,8 +23,8 @@ public class IndexHtmlView {
         this.loginForm=pathHtml.getPartialHtml("login-form.html");
         this.topHtml=pathHtml.getPartialHtml("top.html");
         this.bottomHtml=pathHtml.getPartialHtml("bottom.html");
-        this.logoutButton=pathHtml.getPartialHtml("logout-button.html");
         this.registerForm=pathHtml.getPartialHtml("register-form.html");
+        this.rightBar = pathHtml.getPartialHtml("right-bat.html");
     }
 
     public String getTopHtml() {
@@ -39,11 +39,12 @@ public class IndexHtmlView {
         return loginForm;
     }
 
-    public String getLogoutButton() {
-        return logoutButton;
-    }
 
     public String getRegisterForm() {
         return registerForm;
+    }
+
+    public String getRightBar() {
+        return rightBar;
     }
 }

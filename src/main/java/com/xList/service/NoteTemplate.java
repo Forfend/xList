@@ -90,6 +90,12 @@ public class NoteTemplate {
         out.println(aform);
     }
 
+    /**
+     * Search notes
+     * @param request object from the servlet o get search text from the search form
+     * @return list of found notes or null if there are note
+     */
+
     public List<Note> getSearchNotes(HttpServletRequest request, HttpSession session) {
         try {
             Long user_id = (Long) session.getAttribute("user_id");
@@ -107,6 +113,11 @@ public class NoteTemplate {
 
         return null;
     }
+
+    /**
+     * Finds user and output in HTML page
+     * @param request from the servlet
+     */
 
     public void getSharingNotes(HttpServletRequest request, HttpSession session) {
         if (request == null) return;
@@ -153,5 +164,5 @@ public class NoteTemplate {
         SharedNotes sharedNotes = new SharedNotes(userId,noteId);
         sharedNotesDao.addSharedNote(sharedNotes);
     }
-    
+
 }

@@ -56,7 +56,7 @@ public class NoteServlet extends HttpServlet {
             case "/note-share":
                 logger.fine("/note-share\t"+request.getParameter("search-sharing-user"));
                 NoteTemplate noteTemplate = new NoteTemplate(out);
-                noteTemplate.getSearchNotes(request,session);
+                noteTemplate.getSharingNotes(request,session);
                 break;
         }
     }
@@ -91,6 +91,10 @@ public class NoteServlet extends HttpServlet {
                 long delete = Long.parseLong(request.getParameter("id"));
                 noteDao.deleteNote(delete);
                 response.sendRedirect("/note/show");
+                break;
+            case "/search":
+                List<Note> noteList = noteTemplate.getSearchNotes(request,session);
+                noteTemplate.showShortNotes(noteList);
                 break;
             case "/sharing-user-add-note":
                 logger.fine("Sharing user id is\t"+request.getParameter("userId"));

@@ -6,7 +6,8 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
             <div class="form-group">
                 <label for="textInputTitle">Заголовок</label>
-                <input type="text" class="form-control" id="textInputTitle" name="textInputTitle" value="insert-title-here">
+                <input type="text" class="form-control" id="textInputTitle" name="textInputTitle"
+                       value="insert-title-here">
             </div>
         </div>
 
@@ -70,12 +71,15 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
             <div class="form-group">
                 <label for="summernote">Нотатка</label>
-                <textarea class="form-control" id="summernote" name="textInputMemo" rows="10" >insert-note-here</textarea>
+                <textarea class="form-control" id="summernote" name="textInputMemo"
+                          rows="10">insert-note-here</textarea>
             </div>
         </div>
 
         <div class="col-xs-6 col-md-3 col-md-offset-3 col-lg-2 col-lg-offset-4">
-            <button type="button" class="btn btn-default btn-block" onclick="location.href='/note/delete?id=insert-id-here'">Видалити</button>
+            <button type="button" class="btn btn-default btn-block"
+                    onclick="location.href='/note/delete?id=insert-id-here'">Видалити
+            </button>
         </div>
 
         <div class="col-xs-6 col-md-3 col-lg-2">
@@ -83,3 +87,64 @@
         </div>
     </form>
 </div>
+
+<div class="row">
+    <form action="/note/note-share" method="POST" class="form-horizontal margin-top-15">
+        <div class="form-group">
+            <div class="col-xs-10 col-sm-10 col-md-2 col-md-offset-6 col-lg-2 col-lg-offset-6">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    </div>
+                    <input type="text" class="form-control" id="search-sharing-user" placeholder="Користувач..."
+                           name="search-sharing-user">
+                </div>
+                <input type="hidden" id="noteIdsearch" name="noteIdsearch" value="insert-id-here">
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+                <button type="submit" class="btn btn-default btn-block">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="application/javascript">
+
+    var search_user = document.getElementById("search-sharing-user").addEventListener("keypress", sendAjaxRequest);
+
+    function sendAjaxRequest() {
+        var sharing_user = document.getElementById("search-sharing-user");
+        var note_id = document.getElementById("noteIdsearch");
+        var http = new XMLHttpRequest();
+        if (sharing_user.value().length > 1) {
+            console.log("Search val\t" + sharing_user.value());
+            http.open("POST", "/noteajax/sharing-note-ajax",true);
+            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            http.send("search-sharing-user="+sharing_user.value() + "&noteIdsearch="+note_id.value());
+        }
+
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200){
+                getFunction(this);
+            }
+        };
+
+        function getFunction(obj) {
+            console.log(obj.responseText);
+            var response = JSON.parse(obj.responseText);
+            var noteIdsearch = document.getElementById("noteIdsearch");
+            response.forEach(function (t) {
+                console.log(JSON.stringify(t));
+                var para = document.createElement("a");
+                var node = document.createTextNode(t.name + " " + t.username);
+                para.appendChild(node);
+                para.classList.add("list-group-item");
+                para.href = "/note/sharing-user-add-note?userid=" + t.id + "&noteid=" noteIdsearch.value();
+                var element = document.getElementById("for-insert-AjaxList");
+                element.appendChild(para);
+            })
+        }
+    }
+</script>

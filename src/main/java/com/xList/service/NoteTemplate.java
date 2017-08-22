@@ -101,12 +101,12 @@ public class NoteTemplate {
             Long user_id = (Long) session.getAttribute("user_id");
             if (user_id == null) return null;
 
-            String serchTextByUser = new String(request.getParameter("searchText").getBytes("iso-8859-1"),
+            String searchText = new String(request.getParameter("searchText").getBytes("iso-8859-1"),
                     "UTF-8");
-            logger.fine("search text " + serchTextByUser + " user_id " + user_id);
+            logger.fine("search text " + searchText + " user_id " + user_id);
 
             NoteDao noteDao = new NoteImplementatoin();
-            return noteDao.searchByNoteTitleByNote(serchTextByUser, user_id);
+            return noteDao.searchByNoteTitleByNote(searchText, user_id);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

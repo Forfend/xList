@@ -29,6 +29,7 @@ public class FilterPages implements Filter{
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
+        String logOutBtn = IndexHtmlView.getInstance().getLogoutButton();
         String path = ((HttpServletRequest) request).getRequestURI();
         logger.fine("path if\t"+path);
         if (path.startsWith("/noteajax/")){
@@ -44,8 +45,8 @@ public class FilterPages implements Filter{
             }
 
             if (session.getAttribute("username") !=null){
-                IndexTemplate indexTemplate = new IndexTemplate(printWriter);
-                top = top.replace("<!-- servletInsert01 -->",indexTemplate.getLoggedUserBar(request));
+                logOutBtn = logOutBtn.replace("<!--username-->", session.getAttribute("username").toString());
+                top = top.replace("<!-- servletInsert01 -->",logOutBtn);
             }
             printWriter.write(top);
             chain.doFilter(request,response);

@@ -9,7 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.logging.Logger;
+
 public class IndexTemplate {
+
+
+    private Logger logger = Logger.getLogger("com.xList.service");
 
     interface FormField<E> {
         String check(E e);
@@ -47,11 +52,13 @@ public class IndexTemplate {
             } else if (user.getPassword().equals(loginPassword)) {
                 session.setAttribute("username", user.getUsername());
                 session.setAttribute("user_id", user.getId());
+                logger.fine("User has logged\t"+ user);
                 return true;
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        showErrorLoginForm();
         return false;
     }
 
@@ -154,4 +161,14 @@ public class IndexTemplate {
         registrationForm = registrationForm.replace("Зареєструватись", "Зберегти");
         out.println(registrationForm);
     }
+
+    public String getLoggedUserBar(HttpServletRequest request){
+        String rightBar = IndexHtmlView.getInstance().getRightBar();
+        String url = "//" + request.getServerName()
+                + ((request.getServerPort()==8080)? "" : ":"+request.getServerPort())
+                + "/note/search";
+        rightBar = rightBar.replace("insert-serach-notes-url-here",url);
+        return rightBar;
+    }
+
 }

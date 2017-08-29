@@ -16,37 +16,49 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Logger;
 
 @WebServlet(name = "Servlet", value = {"/note/*"})
 public class NoteServlet extends HttpServlet {
 
+    private Logger logger = Logger.getLogger("com.xList.servlets");
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        NoteDao noteDao = new NoteImplementatoin();
-
-        String memo = new String(request.getParameter("textInputMemo").getBytes("iso-8859-1"),
-                "UTF-8");
-        String textInputTitle = new String(request.getParameter("textInputTitle").getBytes("iso-8859-1"),
-                "UTF-8");
-        String color = request.getParameter("radioitemcolor");
-        if (color == null)
-            color = "FFFFFF";
-
         HttpSession session = request.getSession();
 
-        String noteId = request.getParameter("noteId");
+        switch (request.getPathInfo()){
+            case "/note/add":
+            case "/note/edit":
+                NoteDao noteDao = new NoteImplementatoin();
+                logger.fine("doPost pathInfo\t"+request.getPathInfo());
+                String memo = new String(request.getParameter("textInputMemo").getBytes("iso-8859-1"),
+                        "UTF-8");
+                String textInputTitle = new String(request.getParameter("textInputTitle").getBytes("iso-8859-1"),
+                        "UTF-8");
+                String color = request.getParameter("radioitemcolor");
+                if (color == null)
+                    color = "FFFFFF";
 
-        Note note;
-        if (noteId == null) {
-            note = new Note(memo, textInputTitle, false, LocalDate.now().toString(), color,
-                    Long.parseLong(session.getAttribute("user_id").toString()));
-        } else {
-            note = new Note(Long.parseLong(noteId), memo, textInputTitle, false, LocalDate.now().toString(), color,
-                    Long.parseLong(session.getAttribute("user_id").toString()));
+                String noteId = request.getParameter("noteId");
+
+                Note note;
+                if (noteId == null) {
+                    note = new Note(memo, textInputTitle, false, LocalDate.now().toString(), color,
+                            Long.parseLong(session.getAttribute("user_id").toString()));
+                } else {
+                    note = new Note(Long.parseLong(noteId), memo, textInputTitle, false, LocalDate.now().toString(), color,
+                            Long.parseLong(session.getAttribute("user_id").toString()));
+                }
+                noteDao.addNote(note);
+                response.sendRedirect("/note/show");
+                break;
+            case "/note-share":
+                logger.fine("/note-share\t"+request.getParameter("search-sharing-user"));
+                NoteTemplate noteTemplate = new NoteTemplate(out);
+                noteTemplate.getSharingNotes(request,session);
+                break;
         }
-        noteDao.addNote(note);
-        response.sendRedirect("/note/show");
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,6 +66,8 @@ public class NoteServlet extends HttpServlet {
         HttpSession session = request.getSession();
         int user_id = Integer.parseInt(session.getAttribute("user_id").toString());
         NoteTemplate noteTemplate = new NoteTemplate(out);
+
+        logger.fine("pathInfo\t"+ request.getPathInfo());
 
         NoteDao noteDao = new NoteImplementatoin();
 
@@ -77,6 +91,14 @@ public class NoteServlet extends HttpServlet {
                 long delete = Long.parseLong(request.getParameter("id"));
                 noteDao.deleteNote(delete);
                 response.sendRedirect("/note/show");
+                break;
+            case "/search":
+                List<Note> noteList = noteTemplate.getSearchNotes(request,session);
+                noteTemplate.showShortNotes(noteList);
+                break;
+            case "/sharing-user-add-note":
+                logger.fine("Sharing user id is\t"+request.getParameter("userId"));
+                noteTemplate.addSharingUser(request);
                 break;
             default:
                 response.sendRedirect("/");

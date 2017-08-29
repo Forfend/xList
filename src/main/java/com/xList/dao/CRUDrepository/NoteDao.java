@@ -13,4 +13,6 @@ public interface NoteDao {
     Note getNote(long user_id, long note_id);
 
     List<Note> getAllNote(long user_id);
+
+    List<Note> searchByNoteTitleByNote(String serchText,long userId);
 }

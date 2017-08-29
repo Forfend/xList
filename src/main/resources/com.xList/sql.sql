@@ -59,3 +59,14 @@ alter table shared_notes
 			on update cascade on delete cascade
 ;
 
+create table categories
+(
+	id int auto_increment
+		primary key,
+	user_id int null,
+	category_name varchar(36) null,
+	note_id int null,
+	constraint categories_unique_category_for_user
+		unique (category_name, user_id)
+)
+;

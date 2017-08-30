@@ -12,3 +12,44 @@
     box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.32);
     padding: 15px;
 }
+
+input[id="ritemcolor1"] {
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(255,255,255,1);
+    box-shadow: 0px 0px 0px 3px rgba(255,255,255,1);
+}
+input[id="ritemcolor2"] {
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(255,138,128,1);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(255,138,128,1);
+    box-shadow: 0px 0px 0px 3px rgba(255,138,128,1);
+}
+input[id="ritemcolor3"] {
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(252,210,135,1);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(252,210,135,1);
+    box-shadow: 0px 0px 0px 3px rgba(252,210,135,1);
+}
+input[id="ritemcolor4"] {
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(255,255,141,1);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(255,255,141,1);
+    box-shadow: 0px 0px 0px 3px rgba(255,255,141,1);
+}
+input[id="ritemcolor5"] {
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(207,216,220,1);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(207,216,220,1);
+    box-shadow: 0px 0px 0px 3px rgba(207,216,220,1);
+}
+input[id="ritemcolor6"] {
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(175,229,253,1);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(175,229,253,1);
+    box-shadow: 0px 0px 0px 3px rgba(175,229,253,1);
+}
+input[id="ritemcolor7"] {
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(167,255,235,1);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(167,255,235,1);
+    box-shadow: 0px 0px 0px 3px rgba(167,255,235,1);
+}
+input[id="ritemcolor8"] {
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(204,255,144,1);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(204,255,144,1);
+    box-shadow: 0px 0px 0px 3px rgba(204,255,144,1);
+}

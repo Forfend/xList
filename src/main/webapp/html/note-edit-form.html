@@ -88,27 +88,46 @@
     </form>
 </div>
 
-<div class="row">
-    <form action="/note/note-share" method="POST" class="form-horizontal margin-top-15">
-        <div class="form-group">
-            <div class="col-xs-10 col-sm-10 col-md-2 col-md-offset-6 col-lg-2 col-lg-offset-6">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    </div>
-                    <input type="text" class="form-control" id="search-sharing-user" placeholder="Користувач..."
-                           name="search-sharing-user">
+<div class="row" style="margin: auto">
+    <form class="form-inline" action="/note/note-share" method="POST margin-top-15">
+        <div class="form-group" >
+            <label class="sr-only" for="search-sharing-user">Search Sharing User</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 </div>
+                <input type="text" class="form-control" id="search-sharing-user" placeholder="User..."
+                       name="search-sharing-user">
                 <input type="hidden" id="noteIdsearch" name="noteIdsearch" value="insert-id-here">
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-                <button type="submit" class="btn btn-default btn-block">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
-            </div>
         </div>
+        <button type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
     </form>
 </div>
+
+<!--<div class="row">-->
+    <!--<form action="/note/note-share" method="POST" class="form-horizontal margin-top-15">-->
+        <!--<div class="form-group">-->
+            <!--<div class="col-xs-10 col-sm-10 col-md-2 col-md-offset-6 col-lg-2 col-lg-offset-6">-->
+                <!--<div class="input-group">-->
+                    <!--<div class="input-group-addon">-->
+                        <!--<span class="glyphicon glyphicon-user" aria-hidden="true"></span>-->
+                    <!--</div>-->
+                    <!--<input type="text" class="form-control" id="search-sharing-user" placeholder="Користувач..."-->
+                           <!--name="search-sharing-user">-->
+                <!--</div>-->
+                <!--<input type="hidden" id="noteIdsearch" name="noteIdsearch" value="insert-id-here">-->
+            <!--</div>-->
+            <!--<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">-->
+                <!--<button type="submit" class="btn btn-default btn-block">-->
+                    <!--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</form>-->
+<!--</div>-->
 
 <script type="application/javascript">
 

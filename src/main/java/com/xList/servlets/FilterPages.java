@@ -1,7 +1,6 @@
 package com.xList.servlets;
 
 
-import com.xList.service.IndexTemplate;
 import com.xList.views.IndexHtmlView;
 
 import javax.servlet.*;

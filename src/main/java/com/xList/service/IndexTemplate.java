@@ -162,9 +162,20 @@ public class IndexTemplate {
         registrationForm = registrationForm.replace("Sign up", "sign in");
         out.println(registrationForm);
     }
+
+    public String getLoggedUserBar(HttpServletRequest request){
+
+        String rightBar = IndexHtmlView.getInstance().getLogoutButton();
+        String url = "//" + request.getServerName()
+                + ((request.getServerPort()==8080)? "" : ":"+request.getServerPort())
+                + "/note/search";
+
+        rightBar = rightBar.replace("insert-search-notes-url-here",url);
+        return rightBar;
+    }
     public void editUserProfile(User user){
 
-        
+
 
     }
 

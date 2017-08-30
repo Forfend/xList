@@ -153,23 +153,20 @@ public class IndexTemplate {
         UserDao userDao = new UserImplementation();
         User user = userDao.findByUsername(username);
         if (user == null) return;
-        String registrationForm = IndexHtmlView.getInstance().getRegisterForm();
-        registrationForm = registrationForm.replace("xkeepvall1", "value=\"" + user.getUsername() + "\"");
-        registrationForm = registrationForm.replace("xkeepvall2", "value=\"" + user.getPassword() + "\"");
-        registrationForm = registrationForm.replace("xkeepvall3", "value=\"" + user.getPassword() + "\"");
-        registrationForm = registrationForm.replace("xkeepvall4", "value=\"" + user.getName() + "\"");
-        registrationForm = registrationForm.replace("xkeepvall5", "value=\"" + String.valueOf(user.getId()) + "\"");
-        registrationForm = registrationForm.replace("Зареєструватись", "Зберегти");
+        String registrationForm = IndexHtmlView.getInstance().getEditProfileFormm();
+        registrationForm = registrationForm.replace("emailval", "value=\"" + user.getUsername() + "\"");
+        registrationForm = registrationForm.replace("passwordval", "value=\"" + user.getPassword() + "\"");
+        registrationForm = registrationForm.replace("confirmPasswordval", "value=\"" + user.getPassword() + "\"");
+        registrationForm = registrationForm.replace("nameval", "value=\"" + user.getName() + "\"");
+        registrationForm = registrationForm.replace("userIdval", "value=\"" + String.valueOf(user.getId()) + "\"");
+        registrationForm = registrationForm.replace("Sign up", "sign in");
         out.println(registrationForm);
     }
+    public void editUserProfile(User user){
 
-    public String getLoggedUserBar(HttpServletRequest request){
-        String rightBar = IndexHtmlView.getInstance().getRightBar();
-        String url = "//" + request.getServerName()
-                + ((request.getServerPort()==8080)? "" : ":"+request.getServerPort())
-                + "/note/search";
-        rightBar = rightBar.replace("insert-serach-notes-url-here",url);
-        return rightBar;
     }
+
+
+
 
 }

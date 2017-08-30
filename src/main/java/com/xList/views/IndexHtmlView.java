@@ -26,7 +26,7 @@ public class IndexHtmlView {
         this.bottomHtml=pathHtml.getPartialHtml("bottom.html");
         this.logoutButton=pathHtml.getPartialHtml("logout-button.html");
         this.registerForm=pathHtml.getPartialHtml("register-form.html");
-        this.rightBar = pathHtml.getPartialHtml("right-bat.html");
+        this.rightBar = pathHtml.getPartialHtml("right-bar.html");
     }
 
     public String getTopHtml() {

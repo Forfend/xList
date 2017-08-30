@@ -52,6 +52,7 @@ public class IndexTemplate {
             } else if (user.getPassword().equals(loginPassword)) {
                 session.setAttribute("username", user.getUsername());
                 session.setAttribute("user_id", user.getId());
+                session.setAttribute("name", user.getName());
                 logger.fine("User has logged\t"+ user);
                 return true;
             }
@@ -163,11 +164,11 @@ public class IndexTemplate {
     }
 
     public String getLoggedUserBar(HttpServletRequest request){
-        String rightBar = IndexHtmlView.getInstance().getRightBar();
+        String rightBar = IndexHtmlView.getInstance().getLogoutButton();
         String url = "//" + request.getServerName()
                 + ((request.getServerPort()==8080)? "" : ":"+request.getServerPort())
                 + "/note/search";
-        rightBar = rightBar.replace("insert-serach-notes-url-here",url);
+        rightBar = rightBar.replace("insert-search-notes-url-here",url);
         return rightBar;
     }
 

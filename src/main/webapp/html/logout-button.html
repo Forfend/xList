@@ -1,21 +1,29 @@
 <div class="nav navbar-right">
     <ul class="nav navbar-nav">
         <li>
-            <form action="/search" class="navbar-form navbar-left" method="get">
+            <form action="insert-search-notes-url-here" class="navbar-form navbar-left margin-top-15" role="search">
                 <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <div class="input-group-addon" role="button">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                        </div>
-                    </div>
+                    <input type="text" class="form-control" name="searchText" placeholder="Пошук">
                 </div>
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
             </form>
+            <!--<form action="insert-search-notes-url-here" class="navbar-form navbar-left" method="get">-->
+                <!--<div class="form-group">-->
+                    <!--<div class="input-group">-->
+                        <!--<input type="text" class="form-control" placeholder="Search">-->
+                        <!--<div class="input-group-addon" role="button">-->
+                            <!--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</form>-->
         </li>
         <li>
-            <ul class="nav navbar-nav navbar-right loguot-btn">
+            <ul class="nav navbar-nav navbar-right ">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    <a href="#" class="dropdown-toggle loguot-btn" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false"><!--username--> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/note/show">Show notes</a></li>

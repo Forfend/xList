@@ -1,6 +1,7 @@
 package com.xList.servlets;
 
 
+import com.xList.service.IndexTemplate;
 import com.xList.views.IndexHtmlView;
 
 import javax.servlet.*;
@@ -44,8 +45,10 @@ public class FilterPages implements Filter{
             }
 
             if (session.getAttribute("username") !=null){
-                logOutBtn = logOutBtn.replace("<!--username-->", session.getAttribute("username").toString());
-                top = top.replace("<!-- servletInsert01 -->",logOutBtn);
+                IndexTemplate indexTemplate = new IndexTemplate(printWriter);
+                top = top.replace("<!-- servletInsert01 -->",indexTemplate.getLoggedUserBar(request));
+//                logOutBtn = logOutBtn.replace("<!--username-->", session.getAttribute("name").toString());
+//                top = top.replace("<!-- servletInsert01 -->",logOutBtn);
             }
             printWriter.write(top);
             chain.doFilter(request,response);

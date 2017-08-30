@@ -108,8 +108,8 @@ public class NoteTemplate {
         try {
             Long user_id = (Long) session.getAttribute("user_id");
             if (user_id == null) return null;
-
-            String searchText = new String(request.getParameter("searchText").getBytes("iso-8859-1"),
+            logger.fine("getSearchNotes");
+            String searchText = new String(request.getParameter("searchText").getBytes("UTF-8"),
                     "UTF-8");
             logger.fine("search text " + searchText + " user_id " + user_id);
 

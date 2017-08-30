@@ -27,6 +27,8 @@ public class IndexHtmlView {
         this.logoutButton=pathHtml.getPartialHtml("logout-button.html");
         this.registerForm=pathHtml.getPartialHtml("register-form.html");
         this.editProfileFormm = pathHtml.getPartialHtml("profile-edit-form.html");
+
+
     }
 
     public String getTopHtml() {

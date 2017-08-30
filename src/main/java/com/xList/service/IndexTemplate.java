@@ -164,6 +164,8 @@ public class IndexTemplate {
     }
     public void editUserProfile(User user){
 
+        
+
     }
 
 

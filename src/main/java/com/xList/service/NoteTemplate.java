@@ -33,8 +33,15 @@ public class NoteTemplate {
     public void showShortNotes(List<Note> notes) {
         if (out == null) return;
 
+        int count = 1;
+
         out.println("<div class=\"row\">");
+        String noteAddBtn = NoteHtmlViews.getInstance().getNoteAddButton();
+        out.println(noteAddBtn);
         for (Note oneNote : notes) {
+            if (count%6 == 0 && count!= 0){
+                out.println("</div> <div class=\"row\">");
+            }
             String htmlNote = NoteHtmlViews.getInstance().getShortNoteView();
             htmlNote = htmlNote.replace("<!--insert-id-here-->", String.valueOf(oneNote.getId()));
             htmlNote = htmlNote.replace("<!--insert-title-here-->", String.valueOf(oneNote.getNoteTitle()));
@@ -42,6 +49,7 @@ public class NoteTemplate {
             htmlNote = htmlNote.replace("<!--insert-memo-here-->", shortstr);
             htmlNote = htmlNote.replace("/*insert-color-here*/", "#" + oneNote.getColor());
             out.println(htmlNote);
+            count++;
         }
         out.println("</div>");
     }

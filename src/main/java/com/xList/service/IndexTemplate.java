@@ -52,6 +52,7 @@ public class IndexTemplate {
             } else if (user.getPassword().equals(loginPassword)) {
                 session.setAttribute("username", user.getUsername());
                 session.setAttribute("user_id", user.getId());
+                session.setAttribute("name", user.getName());
                 logger.fine("User has logged\t"+ user);
                 return true;
             }

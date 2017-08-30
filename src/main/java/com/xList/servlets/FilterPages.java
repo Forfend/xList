@@ -45,7 +45,7 @@ public class FilterPages implements Filter{
             }
 
             if (session.getAttribute("username") !=null){
-                logOutBtn = logOutBtn.replace("<!--username-->", session.getAttribute("username").toString());
+                logOutBtn = logOutBtn.replace("<!--username-->", session.getAttribute("name").toString());
                 top = top.replace("<!-- servletInsert01 -->",logOutBtn);
             }
             printWriter.write(top);

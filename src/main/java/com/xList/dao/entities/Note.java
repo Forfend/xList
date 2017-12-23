@@ -1,6 +1,5 @@
 package com.xList.dao.entities;
 
-import java.util.Arrays;
 
 public class Note {
 

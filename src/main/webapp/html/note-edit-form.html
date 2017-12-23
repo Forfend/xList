@@ -19,49 +19,49 @@
                     </div>
                     <div class="col-xs-1">
                         <div class="radio-item" id="radio-item-color1">
-                            <input type="radio" id="ritemcolor1" checked1 name="radioitemcolor" value="FFFFFF"/>
+                            <input type="radio" id="ritemcolor1" checked1 name="radioitemcolor" value="#FFFFFF"/>
                             <label for="ritemcolor1"></label>
                         </div>
                     </div>
                     <div class="col-xs-1">
                         <div class="radio-item" id="radio-item-color2">
-                            <input type="radio" id="ritemcolor2" checked2 name="radioitemcolor" value="FF8A80"/>
+                            <input type="radio" id="ritemcolor2" checked2 name="radioitemcolor" value="#FF8A80"/>
                             <label for="ritemcolor2"></label>
                         </div>
                     </div>
                     <div class="col-xs-1">
                         <div class="radio-item" id="radio-item-color3">
-                            <input type="radio" id="ritemcolor3" checked3 name="radioitemcolor" value="FCD287"/>
+                            <input type="radio" id="ritemcolor3" checked3 name="radioitemcolor" value="#FCD287"/>
                             <label for="ritemcolor3"></label>
                         </div>
                     </div>
                     <div class="col-xs-1">
                         <div class="radio-item" id="radio-item-color4">
-                            <input type="radio" id="ritemcolor4" checked4 name="radioitemcolor" value="FFFF8D"/>
+                            <input type="radio" id="ritemcolor4" checked4 name="radioitemcolor" value="#FFFF8D"/>
                             <label for="ritemcolor4"></label>
                         </div>
                     </div>
                     <div class="col-xs-1">
                         <div class="radio-item" id="radio-item-color5">
-                            <input type="radio" id="ritemcolor5" checked5 name="radioitemcolor" value="CFD8DC"/>
+                            <input type="radio" id="ritemcolor5" checked5 name="radioitemcolor" value="#CFD8DC"/>
                             <label for="ritemcolor5"></label>
                         </div>
                     </div>
                     <div class="col-xs-1">
                         <div class="radio-item" id="radio-item-color6">
-                            <input type="radio" id="ritemcolor6" checked6 name="radioitemcolor" value="AFE5FD"/>
+                            <input type="radio" id="ritemcolor6" checked6 name="radioitemcolor" value="#AFE5FD"/>
                             <label for="ritemcolor6"></label>
                         </div>
                     </div>
                     <div class="col-xs-1">
                         <div class="radio-item" id="radio-item-color7">
-                            <input type="radio" id="ritemcolor7" checked7 name="radioitemcolor" value="A7FFEB"/>
+                            <input type="radio" id="ritemcolor7" checked7 name="radioitemcolor" value="#A7FFEB"/>
                             <label for="ritemcolor7"></label>
                         </div>
                     </div>
                     <div class="col-xs-1" id="radio-item-color8">
                         <div class="radio-item">
-                            <input type="radio" id="ritemcolor8" checked8 name="radioitemcolor" value="CCFF90"/>
+                            <input type="radio" id="ritemcolor8" checked8 name="radioitemcolor" value="#CCFF90"/>
                             <label for="ritemcolor8"></label>
                         </div>
                     </div>
@@ -88,63 +88,4 @@
     </form>
 </div>
 
-<div class="row">
-    <form action="/note/note-share" method="POST" class="form-horizontal margin-top-15">
-        <div class="form-group">
-            <div class="col-xs-10 col-sm-10 col-md-2 col-md-offset-6 col-lg-2 col-lg-offset-6">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    </div>
-                    <input type="text" class="form-control" id="search-sharing-user" placeholder="Користувач..."
-                           name="search-sharing-user">
-                </div>
-                <input type="hidden" id="noteIdsearch" name="noteIdsearch" value="insert-id-here">
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-                <button type="submit" class="btn btn-default btn-block">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
 
-<script type="application/javascript">
-
-    var search_user = document.getElementById("search-sharing-user").addEventListener("keypress", sendAjaxRequest);
-
-    function sendAjaxRequest() {
-        var sharing_user = document.getElementById("search-sharing-user");
-        var note_id = document.getElementById("noteIdsearch");
-        var http = new XMLHttpRequest();
-        if (sharing_user.value().length > 1) {
-            console.log("Search val\t" + sharing_user.value());
-            http.open("POST", "/noteajax/sharing-note-ajax",true);
-            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-            http.send("search-sharing-user="+sharing_user.value() + "&noteIdsearch="+note_id.value());
-        }
-
-        http.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200){
-                getFunction(this);
-            }
-        };
-
-        function getFunction(obj) {
-            console.log(obj.responseText);
-            var response = JSON.parse(obj.responseText);
-            var noteIdsearch = document.getElementById("noteIdsearch");
-            response.forEach(function (t) {
-                console.log(JSON.stringify(t));
-                var para = document.createElement("a");
-                var node = document.createTextNode(t.name + " " + t.username);
-                para.appendChild(node);
-                para.classList.add("list-group-item");
-                para.href = "/note/sharing-user-add-note?userid=" + t.id + "&noteid=" noteIdsearch.value();
-                var element = document.getElementById("for-insert-AjaxList");
-                element.appendChild(para);
-            })
-        }
-    }
-</script>
